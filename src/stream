@@ -1,0 +1,45 @@
+package com.worldline.sdco.goo.repository;
+
+import lombok.Value;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class TestClass {
+
+    public static void main(String[] args) {
+        VendorType[] data = new VendorType[]{
+                new VendorType(1, 12),
+                new VendorType(1, 4),
+                new VendorType(2, 1),
+                new VendorType(4, 1),
+                new VendorType(3, 17),
+                new VendorType(4, 2),
+                new VendorType(4, 2),
+                new VendorType(4, 2),
+                new VendorType(4, 2),
+                new VendorType(4, 2),
+                new VendorType(4, 2),
+                new VendorType(4, 2),
+                new VendorType(4, 2),
+                new VendorType(4, 2),
+                new VendorType(4, 2),
+                new VendorType(8, 1)
+        };
+
+		List<VendorType> vendorTypes = Arrays.asList(data);
+		vendorTypes.stream().collect(Collectors.groupingBy(VendorType::getVendorId)).values().forEach(list->{
+            VendorType reduce = list.stream().reduce(new VendorType(0,0), (partialAgeResult, user) -> new VendorType(user.getVendorId(), partialAgeResult.getNumber()+user.getNumber()));
+            System.out.println(reduce);
+        });
+	}
+
+    @Value
+    public static class VendorType {
+
+        int vendorId;
+        int number;
+    }
+
+}
